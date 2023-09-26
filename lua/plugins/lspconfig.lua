@@ -2,6 +2,8 @@ local M = {
     -- LSP Configuration & Plugins
     'neovim/nvim-lspconfig',
     dependencies = {
+        'jose-elias-alvarez/null-ls.nvim',
+
         -- Automatically install LSPs to stdpath for neovim
         { 'williamboman/mason.nvim', config = true },
         'williamboman/mason-lspconfig.nvim',
@@ -12,6 +14,10 @@ local M = {
 
         -- Additional lua configuration, makes nvim stuff amazing!
         'folke/neodev.nvim',
+
+        'MunifTanjim/prettier.nvim',
+
+        "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
     },
 }
 
@@ -19,22 +25,33 @@ function M.config()
     --  This function gets run when an LSP connects to a particular buffer.
     local on_attach = function(_, bufnr)
         local nmap = function(keys, func, desc)
-            if desc then
-                desc = 'LSP: ' .. desc
-            end
-
             vim.keymap.set('n', keys, func, { buffer = bufnr, desc = desc })
         end
 
-        nmap('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
-        nmap('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
+
+        -- Diagnostic keymaps
+        nmap('[d', vim.diagnostic.goto_prev, 'Go to previous diagnostic message')
+        nmap(']d', vim.diagnostic.goto_next, 'Go to next diagnostic message')
+        nmap('<leader>lf', vim.diagnostic.open_float, '[L]SP: Open [F]loating diagnostic message')
+        nmap('<leader>lq', vim.diagnostic.setloclist, '[L]SP: Open diagnostics list')
+
+        nmap("<leader>li", ":LspInfo<CR>", "[L]SP: [I]nfo")
+        nmap('<leader>lr', vim.lsp.buf.rename, '[L]SP: [R]ename')
+        nmap('<leader>la', vim.lsp.buf.code_action, '[L]SP: Code [A]ction')
 
         nmap('gd', vim.lsp.buf.definition, '[G]oto [D]efinition')
         nmap('gr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
         nmap('gI', require('telescope.builtin').lsp_implementations, '[G]oto [I]mplementation')
-        nmap('<leader>D', vim.lsp.buf.type_definition, 'Type [D]efinition')
-        nmap('<leader>ds', require('telescope.builtin').lsp_document_symbols, '[D]ocument [S]ymbols')
+        nmap('<leader>lD', vim.lsp.buf.type_definition, '[L]SP: Type [D]efinition')
+        nmap('<leader>ls', require('telescope.builtin').lsp_document_symbols, '[L]SP: Document [S]ymbols')
         nmap('<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
+        nmap("<leader>ll", function()
+            if vim.diagnostic.is_disabled(0) == true then
+                vim.diagnostic.enable()
+                vim.cmd [[LspStart]]
+            end
+            require("lsp_lines").toggle()
+        end, "[L]SP: Toggle LSP [L]ines")
 
         -- See `:help K` for why this keymap
         nmap('K', vim.lsp.buf.hover, 'Hover Documentation')
@@ -61,6 +78,15 @@ function M.config()
         rust_analyzer = {},
         tsserver = {},
         html = { filetypes = { 'html', 'twig', 'hbs' } },
+        astro = {},
+        tailwindcss = {},
+        emmet = {
+            filetypes = {
+                "css", "eruby", "html", "javascript", "javascriptreact",
+                "less", "sass", "scss", "svelte", "astro",
+                "pug", "typescriptreact", "vue"
+            },
+        },
 
         lua_ls = {
             Lua = {
@@ -71,7 +97,12 @@ function M.config()
     }
 
     -- Setup neovim lua configuration
-    require('neodev').setup()
+    require("neodev").setup({
+        library = { plugins = { "nvim-dap-ui" }, types = true },
+    })
+
+    -- Setup lsp lines configuration
+    require("lsp_lines").setup({})
 
     -- nvim-cmp supports additional completion capabilities, so broadcast that to servers
     local capabilities = vim.lsp.protocol.make_client_capabilities()
@@ -135,9 +166,9 @@ function M.config()
 
             -- Tsserver usually works poorly. Sorry you work with bad languages
             -- You can remove this line if you know what you're doing :)
-            if client.name == 'tsserver' then
-                return
-            end
+            -- if client.name == 'tsserver' then
+            --     return
+            -- end
 
             -- Create an autocmd that will run *before* we save the buffer.
             --  Run the formatting command for the LSP that has just attached.
@@ -159,6 +190,9 @@ function M.config()
             })
         end,
     })
+
+    require 'settings.null-ls'
+    require 'settings.prettier'
 end
 
 return M

@@ -10,7 +10,7 @@ local M = {
         'hrsh7th/cmp-nvim-lsp',
 
         -- Adds a number of user-friendly snippets
-        'rafamadriz/friendly-snippets',
+        -- 'rafamadriz/friendly-snippets',
     },
 }
 

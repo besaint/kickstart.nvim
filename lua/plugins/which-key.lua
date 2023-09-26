@@ -16,7 +16,14 @@ function M.init()
     vim.o.timeoutlen = 500
 
     local wk = require "which-key"
-    wk.register({ ["<leader>s"] = { name = "[S]earch" } })
+    wk.register({
+        ["<leader>s"] = { name = "[S]earch" },
+        ["<leader>d"] = { name = "[D]ebug" },
+        ["<leader>ds"] = { name = "[D]ebug: [S]tep" },
+        ["<leader>w"] = { name = "[W]orkspace" },
+        ["<leader>l"] = { name = "[L]SP" },
+        ["<leader>g"] = { name = "[G]it" },
+    })
 end
 
 return M
