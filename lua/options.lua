@@ -3,6 +3,9 @@ vim.o.modelines = 0
 
 vim.o.showmode = false
 
+-- vim.o.fg = 'NONE'
+-- vim.o.bg = 'NONE'
+
 -- Set <space> as the leader key
 -- See `:help mapleader`
 --  NOTE: Must happen before plugins are required (otherwise wrong leader will be used)

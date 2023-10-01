@@ -32,7 +32,7 @@ function M.config()
         -- Diagnostic keymaps
         nmap('[d', vim.diagnostic.goto_prev, 'Go to previous diagnostic message')
         nmap(']d', vim.diagnostic.goto_next, 'Go to next diagnostic message')
-        nmap('<leader>lf', vim.diagnostic.open_float, '[L]SP: Open [F]loating diagnostic message')
+        nmap('<leader>lm', vim.diagnostic.open_float, '[L]SP: Open floating diagnostic [M]essage')
         nmap('<leader>lq', vim.diagnostic.setloclist, '[L]SP: Open diagnostics list')
 
         nmap("<leader>li", ":LspInfo<CR>", "[L]SP: [I]nfo")
@@ -80,7 +80,8 @@ function M.config()
         html = { filetypes = { 'html', 'twig', 'hbs' } },
         astro = {},
         tailwindcss = {},
-        emmet = {
+        volar = {},
+        ["emmet_language_server"] = {
             filetypes = {
                 "css", "eruby", "html", "javascript", "javascriptreact",
                 "less", "sass", "scss", "svelte", "astro",
@@ -103,6 +104,7 @@ function M.config()
 
     -- Setup lsp lines configuration
     require("lsp_lines").setup({})
+    vim.diagnostic.config({ virtual_lines = false })
 
     -- nvim-cmp supports additional completion capabilities, so broadcast that to servers
     local capabilities = vim.lsp.protocol.make_client_capabilities()

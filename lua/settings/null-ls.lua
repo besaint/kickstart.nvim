@@ -5,6 +5,11 @@ local event = "BufWritePre" -- or "BufWritePost"
 local async = event == "BufWritePost"
 
 null_ls.setup({
+    sources = {
+        -- Python
+        null_ls.builtins.diagnostics.flake8,
+        null_ls.builtins.diagnostics.mypy
+    },
     on_attach = function(client, bufnr)
         if client.supports_method("textDocument/formatting") then
             vim.keymap.set("n", "<Leader>lf", function()

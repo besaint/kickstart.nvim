@@ -20,7 +20,8 @@ local Gruvbox = {
 
 function Gruvbox.config()
     require('gruvbox').setup({
-        contrast = "hard"
+        contrast = "hard",
+        transparent_mode = true
     })
     vim.o.background = "dark"
     -- vim.g.gruvbox_contrast_dark = "hard"
@@ -52,6 +53,6 @@ function Catppuccin.config()
     vim.cmd('colorscheme catppuccin-frappe')
 end
 
-M = OneDark
+M = Gruvbox
 
 return M
