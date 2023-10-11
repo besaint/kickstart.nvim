@@ -21,43 +21,43 @@ vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = tr
 vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
 
 -- Better window navigation
-keymap("n", "<C-h>", "<C-w>h", opts)
-keymap("n", "<C-j>", "<C-w>j", opts)
-keymap("n", "<C-k>", "<C-w>k", opts)
-keymap("n", "<C-l>", "<C-w>l", opts)
+keymap('n', '<C-h>', '<C-w>h', opts)
+keymap('n', '<C-j>', '<C-w>j', opts)
+keymap('n', '<C-k>', '<C-w>k', opts)
+keymap('n', '<C-l>', '<C-w>l', opts)
 
 -- Resize with arrows
-keymap("n", "<C-Up>", ";resize -2<CR>", opts)
-keymap("n", "<C-Down>", ";resize +2<CR>", opts)
-keymap("n", "<C-Left>", ":vertical resize -2<CR>", opts)
-keymap("n", "<C-Right>", ":vertical resize +2<CR>", opts)
+keymap('n', '<C-Up>', ';resize -2<CR>', opts)
+keymap('n', '<C-Down>', ';resize +2<CR>', opts)
+keymap('n', '<C-Left>', ':vertical resize -2<CR>', opts)
+keymap('n', '<C-Right>', ':vertical resize +2<CR>', opts)
 
 -- Navigate buffers
-keymap("n", "<S-l>", ":bnext<CR>", opts)
-keymap("n", "<S-h>", ":bprevious<CR>", opts)
+keymap('n', '<S-l>', ':bnext<CR>', opts)
+keymap('n', '<S-h>', ':bprevious<CR>', opts)
 
 -- Clear highlights
 -- keymap("n", "<leader>h", "<cmd>nohlsearch<CR>", opts)
 
 -- Cancel search highlighting with ESC
-keymap("n", "<ESC>", ":nohlsearch<Bar>:echo<CR>", opts)
+keymap('n', '<ESC>', ':nohlsearch<Bar>:echo<CR>', opts)
 
 -- Close buffers
-keymap("n", "<S-q>", "<cmd>Bdelete!<CR>", opts)
+keymap('n', '<S-q>', '<cmd>Bdelete!<CR>', opts)
 
 -- Paste over currently selected text without yanking it
-keymap("v", "p", '"_dP', opts)
+-- keymap("v", "p", '"_dP', opts)
 
 -- Insert --
 -- Press jk fast to enter
-keymap("i", "jj", "<ESC>", opts)
-keymap("i", "kk", "<ESC>", opts)
+keymap('i', 'jj', '<ESC>', opts)
+keymap('i', 'kk', '<ESC>', opts)
 
 -- Visual --
 -- Stay in indent mode
-keymap("v", "<", "<gv", opts)
-keymap("v", ">", ">gv", opts)
+keymap('v', '<', '<gv', opts)
+keymap('v', '>', '>gv', opts)
 
 -- Move selected line / block of text in visual mode
-keymap("x", "K", ":move '<-2<CR>gv-gv", opts)
-keymap("x", "J", ":move '>+1<CR>gv-gv", opts)
+keymap('x', 'K', ":move '<-2<CR>gv-gv", opts)
+keymap('x', 'J', ":move '>+1<CR>gv-gv", opts)

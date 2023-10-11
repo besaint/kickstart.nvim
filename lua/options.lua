@@ -37,12 +37,12 @@ vim.o.mouse = 'a'
 --  See `:help 'clipboard'`
 vim.o.clipboard = 'unnamedplus'
 
-vim.opt.colorcolumn = "79"
+vim.opt.colorcolumn = '79'
 
 -- searching
 vim.o.hlsearch = true
 vim.o.incsearch = true
-vim.o.inccommand = "split"
+vim.o.inccommand = 'split'
 
 -- Keep signcolumn on by default
 vim.wo.signcolumn = 'yes'
@@ -92,19 +92,19 @@ vim.o.smartcase = true
 vim.o.infercase = true
 
 -- make backspace behave in a sane manner
-vim.o.backspace = "indent,eol,start"
+vim.o.backspace = 'indent,eol,start'
 
 -- show matching brackets/parenthesis
 vim.opt.showmatch = true
 
 -- disable startup message
-vim.opt.shortmess:append("sI")
+vim.opt.shortmess:append 'sI'
 
 -- cmd display (set to zero to autohide)
 vim.opt.cmdheight = 1
 
 -- gutter sizing
-vim.opt.signcolumn = "yes:2"
+vim.opt.signcolumn = 'yes:2'
 
 -- syntax highlighting
 vim.opt.termguicolors = true
@@ -125,10 +125,21 @@ vim.opt.cursorline = true
 -- set cursorcolumn = true
 
 -- show invisibles
-vim.opt.listchars = { tab = "  ", trail = "·", extends = "»", precedes = "«", nbsp = "░" }
+vim.opt.listchars = { tab = '  ', trail = '·', extends = '»', precedes = '«', nbsp = '░' }
 vim.opt.list = true
 
 -- split style
-vim.opt.fillchars = { vert = "▒" }
+vim.opt.fillchars = { vert = '▒' }
 vim.opt.splitbelow = true
 vim.opt.splitright = true
+
+local function system(command)
+    local file = assert(io.popen(command, 'r'))
+    local output = file:read('*all'):gsub('%s+', '')
+    file:close()
+    return output
+end
+
+if vim.fn.executable 'python3' > 0 then
+    vim.g.python3_host_prog = system 'which python3'
+end
